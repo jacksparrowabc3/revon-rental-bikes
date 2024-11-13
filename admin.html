@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Update Bike Availability</title>
+</head>
+<body>
+  <h1>Admin - Update Bike Availability</h1>
+  <form id="updateForm">
+    <label for="bikeName">Bike Name:</label>
+    <input type="text" id="bikeName" name="bikeName" required><br><br>
+
+    <label for="availability">Availability:</label>
+    <select id="availability" name="availability">
+      <option value="true">Available</option>
+      <option value="false">Not Available</option>
+    </select><br><br>
+
+    <button type="submit">Update Availability</button>
+  </form>
+
+  <script>
+    document.getElementById('updateForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const bikeName = document.getElementById('bikeName').value;
+      const availability = document.getElementById('availability').value;
+
+      fetch('http://localhost:5000/api/availability', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          bikeName: bikeName,
+          available: availability === 'true'
+        })
+      })
+      .then(response => response.text())
+      .then(data => alert(data))
+      .catch(error => console.error('Error:', error));
+    });
+  </script>
+</body>
+</html>

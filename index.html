@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Revon Rental Bikes</title>
+</head>
+<body>
+  <h1>Revon Rental Bikes Availability</h1>
+  <div id="availability"></div>
+
+  <script>
+    fetch('/api/availability')
+      .then(response => response.json())
+      .then(data => {
+        let output = '';
+        for (const bike in data) {
+          output += `<p>${bike}: ${data[bike] ? 'Available' : 'Not Available'}</p>`;
+        }
+        document.getElementById('availability').innerHTML = output;
+      })
+      .catch(error => console.error('Error:', error));
+  </script>
+</body>
+</html>
